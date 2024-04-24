@@ -12,14 +12,21 @@ variable "tagging_config_validation" {
     condition = alltrue([
       for tc in var.tagging_config_validation.tagging_configs : contains(keys(tc.tags), "terraform_repository_uri")
     ])
-    error_message = "All tagging_configs values must contain a 'terraform_repository_uri' key"
+    error_message = "All tagging configs must contain a 'terraform_repository_uri' key"
   }
 
   validation {
     condition = alltrue([
       for tc in var.tagging_config_validation.tagging_configs : contains(keys(tc.tags), "deployed_by")
     ])
-    error_message = "All tagging_configs values must contain a 'deployed_by' key"
+    error_message = "All tagging configs values must contain a 'deployed_by' key"
+  }
+
+  validation {
+    condition = alltrue([
+      for tc in var.tagging_config_validation.tagging_configs : contains(keys(tc.tags), "hidden-title")
+    ])
+    error_message = "All tagging configs values must contain a 'hidden-title' key"
   }
 
   default = {

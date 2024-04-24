@@ -1,7 +1,7 @@
 module "validate_tagging" {
   source = "./validators"
   tagging_config_validation = {
-    tagging_configs = [for c in local.configuration_map : {
+    tagging_configs = [for c in local.pl_intercepted_naming_configuration_map : {
       tf_id         = c.tf_id,
       resource_type = c.resource_type
       parent_name   = c.parent_name
@@ -20,6 +20,12 @@ locals {
 
   tagging_result_map = {
     for key, tc in local.tagging_config_map : key => merge(tc.tags, tc.additoinal_tags)
+  }
+
+  intercepted_tagging_configuration_map = {
+    for key, c in local.pl_intercepted_naming_configuration_map : key => merge(c, {
+      tags = contains(keys(c), "tags") ? local.tagging_result_map[c.tf_id] : null
+    })
   }
 }
 

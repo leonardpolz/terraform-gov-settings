@@ -9,35 +9,37 @@ locals {
   }
 }
 
+// Intercep Pipeline
 locals {
 
-  // Merge resource default configuration with resource configuration
-  resource_default_configuration_map = {
-    for key, c in local.configuration_map : key => merge(
-      local.resource_settings[c.resource_type].default_configuration, {
-        for key, v in c : key => v if v != null || try(local.resource_settings[c.resource_type].default_configuration[key], null) == null
-      }
-    )
-  }
 
-  // Merge global default configuration with resource default configuration
-  global_default_configuration_map = {
-    for key, c in local.resource_default_configuration_map : key => merge(
-      local.global_settings.default_configuration, {
-        for key, v in c : key => v if v != null || try(local.global_settings.default_configuration[key], null) == null
-      }
-    )
-  }
+  // Global Interceptors
+  // ===================
 
-  // Merge naming interceptor configuration and tagging interceptor configuration
-  intercepted_configuration_map = {
-    for key, c in local.global_default_configuration_map : key => merge(c, {
-      // Inject modfied naming from naming-interceptor.tf
-      name = contains(keys(c), "nc_bypass") ? (c.nc_bypass != null ? c.nc_bypass : local.name_result_map[c.tf_id]) : null,
+  // 0 Configuration Input, main.tf
+  pl_configuration_map = local.configuration_map
 
-      // Inject modfied tagging from tagging-interceptor.tf
-      tags = contains(keys(c), "tags") ? local.tagging_result_map[c.tf_id] : null
-    })
-  }
+  // 1 Interceptor: Default Configuration, 1-interceptor.global.default-config.tf
+  pl_intercepted_configuration_map = local.intercepted_default_configuration_map
+
+  // 2 Interceptor: Naming, 2-interceptor.global.naming.tf
+  pl_intercepted_naming_configuration_map = local.intercepted_naming_configuration_map
+
+  // 3 Interceptor: Tagging, 3-interceptor.global.tagging.tf
+  pl_intercepted_tagging_configuration_map = local.intercepted_tagging_configuration_map
+
+
+  // Resource Specific Interceptors
+  // ==============================
+
+  // 4 Interceptor: Private Endpoint, 4-interceptor.private-endpoint.tf
+  pl_intercepted_private_endpoint_configuration_map = local.intercepted_private_endpoint_configuration_map
+
+
+  // Final Configuration
+  // =================== 
+
+
+  intercepted_configuration_map = local.pl_intercepted_private_endpoint_configuration_map
+  #intercepted_configuration_map = local.pl_configuration_map
 }
-
