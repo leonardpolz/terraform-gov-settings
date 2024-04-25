@@ -13,8 +13,7 @@ module "validate_tagging" {
 locals {
   tagging_config_map = { for key, tc in module.validate_tagging.validated_tagging_configs : key => {
     additoinal_tags = merge(local.global_settings.additional_tags, local.resource_settings[tc.resource_type].additional_tags)
-
-    tags = tc.tags
+    tags            = tc.tags
     }
   }
 

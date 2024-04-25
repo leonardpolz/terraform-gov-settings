@@ -1,7 +1,8 @@
 locals {
   global_settings = {
     naming = {
-      no_hypen = false
+      no_hypen             = false
+      allowed_environments = ["dev", "qa", "prd"]
     }
 
     additional_tags = {
@@ -58,5 +59,36 @@ locals {
 
       default_configuration = {}
     }
+
+    "Microsoft.Network/virtualNetworks" = {
+      naming = {
+        abbreviation = "vnet"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
+
+    "Microsoft.Network/virtualNetworks/subnets" = {
+      naming = {
+        abbreviation = "snet"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
+
+    "Microsoft.Network/networkInterfaces" = {
+      naming = {
+        abbreviation = "nic"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
   }
+
 }

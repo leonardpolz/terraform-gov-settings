@@ -1,7 +1,7 @@
 module "validate_name_configs" {
   source = "./validators"
   name_config_validation = {
-    allowed_environments = ["dev", "qa", "prd"]
+    allowed_environments = local.global_settings.naming.allowed_environments
     name_configs = [for c in local.pl_intercepted_configuration_map : merge(c.name_config, {
       tf_id         = c.tf_id,
       resource_type = c.resource_type
@@ -17,20 +17,19 @@ locals {
       local.global_settings.naming,
       local.resource_settings[nc.resource_type].naming
     ).no_hypen,
-    environment   = try(nc.values["environment"], null)
-    workload_name = try(nc.values["workload_name"], null)
-    id            = try(nc.values["id"], null)
+    environment   = try(nc.values["environment"], "")
+    workload_name = try(nc.values["workload_name"], "")
     parent_name   = nc.parent_name != null ? replace(nc.parent_name, "-", "") : null
     }
   }
 
   default_name_combination_map = {
     for key, nc in local.name_config_map : key => {
-      combination = concat([
+      combination = [
         nc.resource_abbreviation,
         nc.environment,
         nc.workload_name,
-      ], nc.id != null ? [nc.id] : [])
+      ]
 
       no_hypen = nc.no_hypen
     } if nc.parent_name == null
@@ -38,10 +37,10 @@ locals {
 
   parent_name_combination_map = {
     for key, nc in local.name_config_map : key => {
-      combination = concat([
+      combination = [
         nc.resource_abbreviation,
         nc.parent_name,
-      ], nc.id != null ? [nc.id] : [])
+      ]
 
       no_hypen = nc.no_hypen
     } if nc.parent_name != null

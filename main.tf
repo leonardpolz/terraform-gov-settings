@@ -35,11 +35,12 @@ locals {
   // 4 Interceptor: Private Endpoint, 4-interceptor.private-endpoint.tf
   pl_intercepted_private_endpoint_configuration_map = local.intercepted_private_endpoint_configuration_map
 
+  // 5 Interceptor: Virtual Network, 5-interceptor.virtual-network.tf
+  pl_intercepted_virtual_network_configuration_map = local.intercepted_virtual_network_configuration_map
+
 
   // Final Configuration
   // =================== 
 
-
-  intercepted_configuration_map = local.pl_intercepted_private_endpoint_configuration_map
-  #intercepted_configuration_map = local.pl_configuration_map
+  intercepted_configuration_map = local.pl_intercepted_virtual_network_configuration_map
 }
