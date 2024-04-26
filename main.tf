@@ -38,9 +38,11 @@ locals {
   // 5 Interceptor: Virtual Network, 5-interceptor.virtual-network.tf
   pl_intercepted_virtual_network_configuration_map = local.intercepted_virtual_network_configuration_map
 
+  // 6 Interceptor: Route Table, 6-interceptor.route-table.tf 
+  pl_intercepted_route_table_configuration_map = local.intercepted_route_table_configuration_map
+
 
   // Final Configuration
   // =================== 
-
-  intercepted_configuration_map = local.pl_intercepted_virtual_network_configuration_map
+  intercepted_configuration_map = local.pl_intercepted_route_table_configuration_map
 }

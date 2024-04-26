@@ -12,6 +12,7 @@ module "validate_name_configs" {
 
 locals {
   name_config_map = { for key, nc in module.validate_name_configs.validated_name_configs : key => {
+    resource_type         = nc.resource_type,
     resource_abbreviation = local.resource_settings[nc.resource_type].naming.abbreviation,
     no_hypen = merge(
       local.global_settings.naming,
@@ -26,9 +27,9 @@ locals {
   default_name_combination_map = {
     for key, nc in local.name_config_map : key => {
       combination = [
-        nc.resource_abbreviation,
-        nc.environment,
-        nc.workload_name,
+        nc[try(local.resource_settings[nc.resource_type].naming.combination_order[0], local.global_settings.naming.combination_order[0])],
+        nc[try(local.resource_settings[nc.resource_type].naming.combination_order[1], local.global_settings.naming.combination_order[1])],
+        nc[try(local.resource_settings[nc.resource_type].naming.combination_order[2], local.global_settings.naming.combination_order[2])],
       ]
 
       no_hypen = nc.no_hypen

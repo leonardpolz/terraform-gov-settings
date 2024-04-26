@@ -3,6 +3,7 @@ locals {
     naming = {
       no_hypen             = false
       allowed_environments = ["dev", "qa", "prd"]
+      combination_order    = ["resource_abbreviation", "environment", "workload_name"]
     }
 
     additional_tags = {
@@ -89,6 +90,15 @@ locals {
 
       default_configuration = {}
     }
-  }
 
+    "Microsoft.Network/routeTables" = {
+      naming = {
+        abbreviation = "rt"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
+  }
 }
