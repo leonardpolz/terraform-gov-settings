@@ -100,5 +100,15 @@ locals {
 
       default_configuration = {}
     }
+
+    "Microsoft.Network/networkSecurityGroups" = {
+      naming = {
+        abbreviation = "nsg"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
   }
 }

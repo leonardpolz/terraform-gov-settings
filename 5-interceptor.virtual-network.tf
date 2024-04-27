@@ -14,6 +14,18 @@ locals {
                   }
                 )
               ]
+
+              network_security_group_settings = merge(
+                snet.network_security_group_settings, {
+                  tags = merge(
+                    try(snet.network_security_group_settings.tags, null) != null ? snet.network_security_group_settings.tags : {}, merge(
+                      c.tags, {
+                        hidden-title = "Network Security Group for Subnet ${c.name}/${snet.nc_bypass != null ? snet.nc_bypass : local.snet_name_result_map[snet.tf_id]}"
+                      }
+                    )
+                  )
+                }
+              )
             }
           )
         ]

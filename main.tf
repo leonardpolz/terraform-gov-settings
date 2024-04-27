@@ -41,8 +41,11 @@ locals {
   // 6 Interceptor: Route Table, 6-interceptor.route-table.tf 
   pl_intercepted_route_table_configuration_map = local.intercepted_route_table_configuration_map
 
+  // 7 Interceptor: Network Security Group, 7-interceptor.network-security-group.tf
+  pl_intercepted_network_security_group_configuration_map = local.intercepted_network_security_group_configuration_map
+
 
   // Final Configuration
   // =================== 
-  intercepted_configuration_map = local.pl_intercepted_route_table_configuration_map
+  intercepted_configuration_map = local.pl_intercepted_network_security_group_configuration_map
 }

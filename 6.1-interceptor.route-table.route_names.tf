@@ -39,4 +39,3 @@ locals {
     for key, nc in local.route_name_combination_map : key => join(nc.no_hypen ? "" : "-", nc.combination)
   }
 }
-
