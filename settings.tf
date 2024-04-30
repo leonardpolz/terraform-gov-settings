@@ -110,5 +110,28 @@ locals {
 
       default_configuration = {}
     }
+
+    "Microsoft.Sql/managedInstances" = {
+      naming = {
+        abbreviation = "sqlmi"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {
+        license_type = "BasePrice"
+        sku_name     = "GP_Gen5"
+      }
+    }
+
+    "Microsoft.Network/privateDnsZones" = {
+      naming = {
+        abbreviation = "pdz"
+      }
+
+      additional_tags = {}
+
+      default_configuration = {}
+    }
   }
 }

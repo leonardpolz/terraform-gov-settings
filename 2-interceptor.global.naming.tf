@@ -20,7 +20,7 @@ locals {
     ).no_hypen,
     environment   = try(nc.values["environment"], "")
     workload_name = try(nc.values["workload_name"], "")
-    parent_name   = nc.parent_name != null ? replace(nc.parent_name, "-", "") : null
+    parent_name   = nc.parent_name
     }
   }
 

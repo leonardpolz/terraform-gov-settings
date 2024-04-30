@@ -12,7 +12,6 @@ locals {
 // Intercep Pipeline
 locals {
 
-
   // Global Interceptors
   // ===================
 
@@ -44,8 +43,11 @@ locals {
   // 7 Interceptor: Network Security Group, 7-interceptor.network-security-group.tf
   pl_intercepted_network_security_group_configuration_map = local.intercepted_network_security_group_configuration_map
 
+  // 8 Interceptor: MSSQL Managed Instance, 8-interceptor.mssql-managed-instance.tf
+  pl_intercepted_mssql_managed_instance_configuration_map = local.intercepted_mssql_managed_instance_configuration_map
+
 
   // Final Configuration
   // =================== 
-  intercepted_configuration_map = local.pl_intercepted_network_security_group_configuration_map
+  intercepted_configuration_map = local.pl_intercepted_mssql_managed_instance_configuration_map
 }

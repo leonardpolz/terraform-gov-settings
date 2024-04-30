@@ -2,13 +2,13 @@ locals {
   intercepted_virtual_network_configuration_map_snet = {
     for key, c in local.pl_intercepted_private_endpoint_configuration_map : key => merge(
       c, c.resource_type != "Microsoft.Network/virtualNetworks" ? {} : {
-        subnets = [
-          for snet in c.subnets != null ? c.subnets : [] : merge(
+        subnets = {
+          for snet in c.subnets != null ? c.subnets : [] : snet.tf_id => merge(
             snet, {
               name = snet.nc_bypass != null ? snet.nc_bypass : local.snet_name_result_map[snet.tf_id]
 
               delegations = [
-                for index, del in snet.delegations : merge(
+                for index, del in snet.delegations != null ? snet.delegations : [] : merge(
                   del, {
                     name = del.nc_bypass != null ? del.nc_bypass : local.snet_delegation_name_result_map["${snet.tf_id}_${index}"]
                   }
@@ -28,7 +28,7 @@ locals {
               )
             }
           )
-        ]
+        }
       }
     )
   }
