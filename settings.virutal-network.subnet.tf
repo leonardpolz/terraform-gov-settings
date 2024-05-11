@@ -1,5 +1,5 @@
 locals {
-  virtual_network_settings = {
+  virtual_network_subnet_settings = {
     abbreviation = "vnet"
   }
 }

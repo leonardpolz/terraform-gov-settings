@@ -8,19 +8,19 @@ locals {
     default_naming = {
 
       ## Required: Name segments of naming convention
-      additional_name_segments = {
+      required_name_segments = {
 
         ## Optional: name segment for region
-        # region = {
-        #   regex_requirements = "^[^-]+$" # Required
-        #   nullable           = false     # Required
-        # }
+        // region = {
+        //   regex_requirements = "^[^-]+$" # Required
+        //   nullable           = false     # Required
+        // }
 
         ## Optional: name segment for organization
-        # organization = {
-        #   regex_requirements = "^[^-]+$" # Required
-        #   nullable           = false     # Required
-        # }
+        // organization = {
+        //   regex_requirements = "^[^-]+$" # Required
+        //   nullable           = false     # Required
+        // }
 
         ## Optional: name segment for landing zone
         landing_zone = {
@@ -30,8 +30,8 @@ locals {
 
         ## Optional: name segment for environment
         environment = {
-          regex_requirements = "dev|test|prod|qa" # Required
-          nullable           = false              # Required
+          regex_requirements = "dev|tst|prod|qa" # Required
+          nullable           = false             # Required
         }
 
         ## Optional: name segment for workload name
@@ -47,8 +47,8 @@ locals {
       ## Required: Order of name segments
       name_segment_order = [
         "resource_type", # Optional: Generally available
-        #"region",        # Optional
-        #"organization",  # Optional
+        //"region",        # Optional
+        //"organization",  # Optional
         "landing_zone", # Optional
         "environment",  # Optional
         "workload_name" # Optional
@@ -69,16 +69,16 @@ locals {
       additional_name_segments = {
 
         ## Optional: name segment for region
-        # region = {
-        #   regex_requirements = "^[^-]+$" # Required
-        #   nullable           = false     # Required
-        # }
+        // region = {
+        //   regex_requirements = "^[^-]+$" # Required
+        //   nullable           = false     # Required
+        // }
 
         ## Optional: name segment for organization
-        # organization = {
-        #   regex_requirements = "^[^-]+$" # Required
-        #   nullable           = false     # Required
-        # }
+        // organization = {
+        //   regex_requirements = "^[^-]+$" # Required
+        //   nullable           = false     # Required
+        // }
 
         ## Optional: name segment for landing zone
         landing_zone = {
@@ -104,10 +104,10 @@ locals {
 
       name_segment_order = [
         "resource_type", # Optional: Generally available
-        # "region",        # Optional
-        # "organization",  # Optional
-        # "landing_zone",  # Optional
-        # "environment",   # Optional
+        // "region",        # Optional
+        // "organization",  # Optional
+        // "landing_zone",  # Optional
+        // "environment",   # Optional
         "parent_name",  # Optional: Generally available
         "workload_name" # Optional
 
@@ -134,8 +134,8 @@ locals {
       required_tags = [
         "hidden-title",             # optional
         "provisioned_by",           # optional
-        "terraform_repository_url", # optional
-        "terraform_version",        # optional
+        "terraform_repository_uri", # optional
+        // "terraform_version",        # optional
 
         ## Other required tags
         # (...)
@@ -147,7 +147,7 @@ locals {
 
       ## Required: Default configuration for resources
       default_config = {
-        region = "westeurope" # optional
+        location = "westeurope" # optional
 
         ## Other default configurations
         # (...)
@@ -155,7 +155,7 @@ locals {
 
       ## Required: Required configuration for resources
       required_config = {
-        region = "westeurope" # optional
+        #location = "westeurope" # optional
 
         ## Other required configurations
         # (...)
