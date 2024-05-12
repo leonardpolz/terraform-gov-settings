@@ -1,13 +1,16 @@
-## Description: This file contains the global settings for the naming, tagging, and configuration of resources.
-##################################################################################################################
+## Global Ressource Settings
+## =======================================================
+## Pre-configured example settings for general resources, these settings are active while no specific settings are defined in the resource configuration
 
 locals {
   global_settings = {
 
     ## Reguired: Default conventions for resources
+    ## This pre-configured naming results in the following naming convention: "<resource_abbreviation>-<landing_zone>-<environment>-<workload_name>"
     default_naming = {
 
       ## Required: Name segments of naming convention
+      ## These key are required in each name_segments map of each resource configuration name_config unless a more specific naming convention is defined in ressource settings
       required_name_segments = {
 
         ## Optional: name segment for region
@@ -46,7 +49,7 @@ locals {
 
       ## Required: Order of name segments
       name_segment_order = [
-        "resource_type", # Optional: Generally available
+        "resource_abbreviation", # Optional: Generally available
         //"region",        # Optional
         //"organization",  # Optional
         "landing_zone", # Optional
@@ -63,10 +66,11 @@ locals {
 
     ## Required: Naming Convention for child resources
     ## This naming convention config is active when a resource is deployed as sub resource, e.g. if a nsg is deployed for a perticular subnet
+    ## This pre-configured naming results in the following naming convention: "<resource_abbreviation>-<parent_name>"
     child_naming = {
 
       ## Required: Name segments of naming convention
-      additional_name_segments = {
+      required_name_segments = {
 
         ## Optional: name segment for region
         // region = {
@@ -81,16 +85,16 @@ locals {
         // }
 
         ## Optional: name segment for landing zone
-        landing_zone = {
-          regex_requirements = "^[^-]+$" # Required
-          nullable           = false     # Required
-        }
+        //landing_zone = {
+        //  regex_requirements = "^[^-]+$" # Required
+        //  nullable           = false     # Required
+        //}
 
         ## Optional: name segment for environment
-        environment = {
-          regex_requirements = "dev|test|prod|qa" # Required
-          nullable           = false              # Required
-        }
+        # environment = {
+        #   regex_requirements = "dev|test|prod|qa" # Required
+        #   nullable           = false              # Required
+        # }
 
         ## Optional: name segment for workload name
         workload_name = {
@@ -103,13 +107,13 @@ locals {
       }
 
       name_segment_order = [
-        "resource_type", # Optional: Generally available
+        "resource_abbreviation", # Optional: Generally available
         // "region",        # Optional
         // "organization",  # Optional
         // "landing_zone",  # Optional
         // "environment",   # Optional
-        "parent_name",  # Optional: Generally available
-        "workload_name" # Optional
+        "parent_name", # Optional: Generally available
+        #"workload_name" # Optional
 
         ## Other name segments
         # (...)
